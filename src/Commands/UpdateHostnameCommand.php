@@ -36,7 +36,7 @@ class UpdateHostnameCommand extends Command
         $success = false;
         $attempts = 5;
 
-        while (!$success || $attempts >= 0) {
+        while (!$success && $attempts > 0) {
             try {
                 $attempts--;
 
