@@ -1,5 +1,5 @@
 {
-    "name": "abdukhaligov/phober-laravel-common",
+    "name": "phobiavr/phober-laravel-common",
     "description": "Shared package for Phober microservices",
     "type": "library",
     "license": "MIT",
