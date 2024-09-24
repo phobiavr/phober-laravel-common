@@ -1,6 +1,6 @@
 <?php
 
-namespace Abdukhaligov\PhoberLaravelCommon;
+namespace Phobiavr\PhoberLaravelCommon;
 
 class Helper {
     public static function quickRandom($length = 16): string {

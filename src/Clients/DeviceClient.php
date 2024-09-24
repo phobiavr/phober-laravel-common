@@ -1,6 +1,6 @@
 <?php
 
-namespace Abdukhaligov\PhoberLaravelCommon\Clients;
+namespace Phobiavr\PhoberLaravelCommon\Clients;
 
 use DateTime;
 use GuzzleHttp\Promise\PromiseInterface;

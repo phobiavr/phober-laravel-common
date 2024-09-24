@@ -1,9 +1,9 @@
 <?php
 
-namespace Abdukhaligov\PhoberLaravelCommon\Commands;
+namespace Phobiavr\PhoberLaravelCommon\Commands;
 
 use Illuminate\Console\Command;
-use Abdukhaligov\PhoberLaravelCommon\Clients\ConfigClient;
+use Phobiavr\PhoberLaravelCommon\Clients\ConfigClient;
 
 class UpdateConfigsCommand extends Command
 {

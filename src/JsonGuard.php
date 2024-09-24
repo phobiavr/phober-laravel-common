@@ -1,6 +1,6 @@
 <?php
 
-namespace Abdukhaligov\PhoberLaravelCommon;
+namespace Phobiavr\PhoberLaravelCommon;
 
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\UserProvider;

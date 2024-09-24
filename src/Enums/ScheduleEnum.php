@@ -1,6 +1,6 @@
 <?php
 
-namespace Abdukhaligov\PhoberLaravelCommon\Enums;
+namespace Phobiavr\PhoberLaravelCommon\Enums;
 
 enum ScheduleEnum: string {
     case MAINTENANCE = 'MAINTENANCE';

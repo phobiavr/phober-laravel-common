@@ -1,6 +1,6 @@
 <?php
 
-namespace Abdukhaligov\PhoberLaravelCommon\Traits;
+namespace Phobiavr\PhoberLaravelCommon\Traits;
 
 use Author;
 use Illuminate\Database\Eloquent\Relations\MorphOne;

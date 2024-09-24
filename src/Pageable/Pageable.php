@@ -1,6 +1,6 @@
 <?php
 
-namespace Abdukhaligov\PhoberLaravelCommon\Pageable;
+namespace Phobiavr\PhoberLaravelCommon\Pageable;
 
 /**
  * @method static paginateFromRequest(PageableRequest $request)

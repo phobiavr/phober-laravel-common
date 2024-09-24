@@ -17,18 +17,18 @@
     },
     "autoload": {
         "psr-4": {
-            "PhoberLaravelCommon\\": "src/"
+            "Phobiavr\\PhoberLaravelCommon\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "PhoberLaravelCommon\\Tests\\": "tests/"
+            "Phobiavr\\PhoberLaravelCommon\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "PhoberLaravelCommon\\SharedServiceProvider"
+                "Phobiavr\\PhoberLaravelCommon\\SharedServiceProvider"
             ]
         }
     },

@@ -1,8 +1,8 @@
 <?php
 
-namespace Abdukhaligov\PhoberLaravelCommon\Middleware;
+namespace Phobiavr\PhoberLaravelCommon\Middleware;
 
-use Abdukhaligov\PhoberLaravelCommon\Clients\OtpClient;
+use Phobiavr\PhoberLaravelCommon\Clients\OtpClient;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

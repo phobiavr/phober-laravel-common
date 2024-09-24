@@ -1,10 +1,10 @@
 <?php
 
-namespace Abdukhaligov\PhoberLaravelCommon;
+namespace Phobiavr\PhoberLaravelCommon;
 
-use Abdukhaligov\PhoberLaravelCommon\Clients\ConfigClient;
-use Abdukhaligov\PhoberLaravelCommon\Commands\UpdateConfigsCommand;
-use Abdukhaligov\PhoberLaravelCommon\Commands\UpdateHostnameCommand;
+use Phobiavr\PhoberLaravelCommon\Clients\ConfigClient;
+use Phobiavr\PhoberLaravelCommon\Commands\UpdateConfigsCommand;
+use Phobiavr\PhoberLaravelCommon\Commands\UpdateHostnameCommand;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Auth;
@@ -12,12 +12,12 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Telescope\Telescope;
-use Abdukhaligov\PhoberLaravelCommon\Middleware\AuthServerMiddleware;
-use Abdukhaligov\PhoberLaravelCommon\Middleware\ForceJsonMiddleware;
-use Abdukhaligov\PhoberLaravelCommon\Middleware\OTPGenerateMiddleware;
-use Abdukhaligov\PhoberLaravelCommon\Middleware\OTPMiddleware;
-use Abdukhaligov\PhoberLaravelCommon\Middleware\PrivateMiddleware;
-use Abdukhaligov\PhoberLaravelCommon\Middleware\TranslationMiddleware;
+use Phobiavr\PhoberLaravelCommon\Middleware\AuthServerMiddleware;
+use Phobiavr\PhoberLaravelCommon\Middleware\ForceJsonMiddleware;
+use Phobiavr\PhoberLaravelCommon\Middleware\OTPGenerateMiddleware;
+use Phobiavr\PhoberLaravelCommon\Middleware\OTPMiddleware;
+use Phobiavr\PhoberLaravelCommon\Middleware\PrivateMiddleware;
+use Phobiavr\PhoberLaravelCommon\Middleware\TranslationMiddleware;
 
 class SharedServiceProvider extends ServiceProvider {
     /**

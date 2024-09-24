@@ -1,6 +1,6 @@
 <?php
 
-namespace Abdukhaligov\PhoberLaravelCommon;
+namespace Phobiavr\PhoberLaravelCommon;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;

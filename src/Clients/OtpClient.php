@@ -1,6 +1,6 @@
 <?php
 
-namespace Abdukhaligov\PhoberLaravelCommon\Clients;
+namespace Phobiavr\PhoberLaravelCommon\Clients;
 
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;

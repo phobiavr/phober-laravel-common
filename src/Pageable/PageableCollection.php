@@ -1,6 +1,6 @@
 <?php
 
-namespace Abdukhaligov\PhoberLaravelCommon\Pageable;
+namespace Phobiavr\PhoberLaravelCommon\Pageable;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Request;

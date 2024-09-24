@@ -1,6 +1,6 @@
 <?php
 
-namespace Abdukhaligov\PhoberLaravelCommon\Middleware;
+namespace Phobiavr\PhoberLaravelCommon\Middleware;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;

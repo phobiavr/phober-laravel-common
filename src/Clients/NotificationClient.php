@@ -1,6 +1,6 @@
 <?php
 
-namespace Abdukhaligov\PhoberLaravelCommon\Clients;
+namespace Phobiavr\PhoberLaravelCommon\Clients;
 
 use Enums\NotificationChannel;
 use Enums\NotificationProvider;

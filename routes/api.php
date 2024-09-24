@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-use Abdukhaligov\PhoberLaravelCommon\Clients\ConfigClient;
+use Phobiavr\PhoberLaravelCommon\Clients\ConfigClient;
 
 Route::get('/instance-info', function () {
     return response()->json(['instance_id' => gethostname()]);

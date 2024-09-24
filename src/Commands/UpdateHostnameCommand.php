@@ -1,6 +1,6 @@
 <?php
 
-namespace Abdukhaligov\PhoberLaravelCommon\Commands;
+namespace Phobiavr\PhoberLaravelCommon\Commands;
 
 use Carbon\Carbon;
 use Illuminate\Console\Command;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Abdukhaligov\PhoberLaravelCommon\Middleware;
+namespace Phobiavr\PhoberLaravelCommon\Middleware;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;

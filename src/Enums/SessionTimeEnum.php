@@ -1,6 +1,6 @@
 <?php
 
-namespace Abdukhaligov\PhoberLaravelCommon\Enums;
+namespace Phobiavr\PhoberLaravelCommon\Enums;
 
 enum SessionTimeEnum: string {
     case MIN_15 = 'MIN_15';
