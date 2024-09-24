@@ -2,8 +2,8 @@
 
 namespace Phobiavr\PhoberLaravelCommon\Clients;
 
-use Enums\NotificationChannel;
-use Enums\NotificationProvider;
+use Phobiavr\PhoberLaravelCommon\Enums\NotificationChannel;
+use Phobiavr\PhoberLaravelCommon\Enums\NotificationProvider;
 use Illuminate\Support\Facades\Http;
 
 class NotificationClient {
