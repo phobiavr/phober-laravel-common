@@ -5,6 +5,7 @@ namespace Phobiavr\PhoberLaravelCommon\Commands;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class UpdateHostnameCommand extends Command
 {
@@ -33,9 +34,12 @@ class UpdateHostnameCommand extends Command
         $containerName = $this->argument('container'); // Manually provided container name
         $timestamp = Carbon::now();
         $success = false;
+        $attempts = 5;
 
-        while (!$success) {
+        while (!$success || $attempts >= 0) {
             try {
+                $attempts--;
+
                 $query = DB::connection('db_shared')->table('hostnames');
 
                 $query->insert([
@@ -49,7 +53,8 @@ class UpdateHostnameCommand extends Command
 
                 $success = true;
             } catch (\Exception $e) {
-                $this->error("Failed to create a hostname record: {$e->getMessage()}. Retrying in 5 seconds...");
+                Log::error("Failed to create a hostname record attempts {$attempts} left", ['message' => $e->getMessage()]);
+                $this->error("Failed to create a hostname record: {$e->getMessage()}. Retrying in 5 seconds, attempts {$attempts} left...");
                 sleep(5);
             }
         }
