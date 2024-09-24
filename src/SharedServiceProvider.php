@@ -44,7 +44,6 @@ class SharedServiceProvider extends ServiceProvider {
         $this->registerCommands();
 
         $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
-        $this->loadRoutesFrom((base_path('routes/api.php')));
 
         $kernel->pushMiddleware(ForceJsonMiddleware::class);
         $kernel->pushMiddleware(TranslationMiddleware::class);
