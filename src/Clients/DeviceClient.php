@@ -6,9 +6,9 @@ use DateTime;
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
-use Enums\ScheduleEnum;
-use Enums\SessionTariffEnum;
-use Enums\SessionTimeEnum;
+use Phobiavr\PhoberLaravelCommon\Enums\ScheduleEnum;
+use Phobiavr\PhoberLaravelCommon\Enums\SessionTariffEnum;
+use Phobiavr\PhoberLaravelCommon\Enums\SessionTimeEnum;
 
 class DeviceClient {
     protected static ?string $url = 'http://device-service';
