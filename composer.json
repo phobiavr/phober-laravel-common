@@ -26,13 +26,6 @@
             "Phobiavr\\PhoberLaravelCommon\\Tests\\": "tests/"
         }
     },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Phobiavr\\PhoberLaravelCommon\\SharedServiceProvider"
-            ]
-        }
-    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }
