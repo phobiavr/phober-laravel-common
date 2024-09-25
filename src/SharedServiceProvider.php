@@ -26,11 +26,7 @@ class SharedServiceProvider extends ServiceProvider {
      * @return void
      */
     public function register(): void {
-//        try {
-//            Telescope::ignoreMigrations();
-//        } catch (\Throwable $exception) {
-//            Log::error('Error in Telescope migration:', ['message' => $exception->getMessage()]);
-//        }
+        //
     }
 
     /**
