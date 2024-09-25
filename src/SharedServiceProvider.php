@@ -9,9 +9,9 @@ use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Log;
+//use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Telescope\Telescope;
+//use Laravel\Telescope\Telescope;
 use Phobiavr\PhoberLaravelCommon\Middleware\AuthServerMiddleware;
 use Phobiavr\PhoberLaravelCommon\Middleware\ForceJsonMiddleware;
 use Phobiavr\PhoberLaravelCommon\Middleware\OTPGenerateMiddleware;
@@ -26,11 +26,11 @@ class SharedServiceProvider extends ServiceProvider {
      * @return void
      */
     public function register(): void {
-        try {
-            Telescope::ignoreMigrations();
-        } catch (\Throwable $exception) {
-            Log::error('Error in Telescope migration:', ['message' => $exception->getMessage()]);
-        }
+//        try {
+//            Telescope::ignoreMigrations();
+//        } catch (\Throwable $exception) {
+//            Log::error('Error in Telescope migration:', ['message' => $exception->getMessage()]);
+//        }
     }
 
     /**
