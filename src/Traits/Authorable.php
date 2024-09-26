@@ -2,9 +2,9 @@
 
 namespace Phobiavr\PhoberLaravelCommon\Traits;
 
-use Author;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Facades\Auth;
+use Phobiavr\PhoberLaravelCommon\Author;
 
 trait Authorable {
     protected static function bootAuthorable(): void {
