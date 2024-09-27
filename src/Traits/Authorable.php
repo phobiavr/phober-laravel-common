@@ -18,6 +18,6 @@ trait Authorable {
     }
 
     public function author(): MorphOne {
-        return $this->setConnection('db_shared')->morphOne(Author::class, 'authorable');
+        return $this->morphOne(Author::class, 'authorable');
     }
 }
