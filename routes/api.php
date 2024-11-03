@@ -37,7 +37,8 @@ Route::middleware('private')->group(function () {
                 'overwrite' => $overwrite,
                 'custom_env_file' => $envFile ?: 'Default',
             ],
-            'results' => [
+            'output' => Artisan::output(),
+            'result' => [
                 'new_configurations_added' => ConfigClient::$newConfigCount,
                 'configurations_updated' => ConfigClient::$updatedConfigCount,
             ],
