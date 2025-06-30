@@ -15,4 +15,12 @@ class AuthClient {
 
         return $response->status() === Response::HTTP_OK ? $response['user'] : null;
     }
+    
+    public static function linkTelegram(array $params): bool
+    {
+        $response = Http::accept('application/json')->withHeaders(['X-APP-KEY' => env('APP_KEY')])
+            ->post(self::$url . '/link/telegram', $params);
+        
+        return $response->status() === Response::HTTP_OK;
+    }
 }
