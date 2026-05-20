@@ -11,6 +11,7 @@ class ConfigClient {
     public static bool $runEveryTime = false;
     public static int $newConfigCount = 0;
     public static int $updatedConfigCount = 0;
+    public static int $deletedConfigCount = 0;
     public static ?string $customEnvFile = null;
 
     public static function runEveryTime(): void {
@@ -45,6 +46,7 @@ class ConfigClient {
         $envFile = ConfigClient::$customEnvFile ?? base_path('.env.shared');
         ConfigClient::$newConfigCount = 0;
         ConfigClient::$updatedConfigCount = 0;
+        ConfigClient::$deletedConfigCount = 0;
         $hasChanges = false;
 
         if (!file_exists($envFile)) {
@@ -80,9 +82,28 @@ class ConfigClient {
                 }
             }
 
-            if ($hasChanges && !str_ends_with($str, "\n")) {
-                $str .= "\n";
+        }
+
+        // Remove keys not present in incoming values (full rebuild)
+        $lines = explode("\n", $str);
+        $filteredLines = [];
+        foreach ($lines as $line) {
+            if ($line === '' || !str_contains($line, '=')) {
+                $filteredLines[] = $line;
+                continue;
             }
+            $key = explode('=', $line, 2)[0];
+            if (array_key_exists($key, $values)) {
+                $filteredLines[] = $line;
+            } else {
+                ConfigClient::$deletedConfigCount++;
+                $hasChanges = true;
+            }
+        }
+        $str = implode("\n", $filteredLines);
+
+        if ($hasChanges && !str_ends_with($str, "\n")) {
+            $str .= "\n";
         }
 
         $dryRun || file_put_contents($envFile, $str) !== false;

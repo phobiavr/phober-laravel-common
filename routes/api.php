@@ -41,6 +41,7 @@ Route::middleware('private')->group(function () {
             'result' => [
                 'new_configurations_added' => ConfigClient::$newConfigCount,
                 'configurations_updated' => ConfigClient::$updatedConfigCount,
+                'configurations_deleted' => ConfigClient::$deletedConfigCount,
             ],
         ]);
     });
