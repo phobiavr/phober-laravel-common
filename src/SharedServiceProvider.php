@@ -26,7 +26,7 @@ class SharedServiceProvider extends ServiceProvider {
      * @return void
      */
     public function register(): void {
-        //
+        $this->mergeConfigFrom(__DIR__ . '/../config/features.php', 'features');
     }
 
     /**
