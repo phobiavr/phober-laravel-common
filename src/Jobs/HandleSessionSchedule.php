@@ -17,10 +17,11 @@ class HandleSessionSchedule implements ShouldQueue
         public readonly int $instanceId,
         public readonly string $action,
         public readonly ?int $time = null,
+        public readonly ?int $sessionId = null,
     ) {}
 
     public function handle(SessionScheduleHandlerInterface $handler): void
     {
-        $handler->handle($this->instanceId, $this->action, $this->time);
+        $handler->handle($this->instanceId, $this->action, $this->time, $this->sessionId);
     }
 }
