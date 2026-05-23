@@ -2,6 +2,16 @@
 
 namespace Phobiavr\PhoberLaravelCommon\Clients;
 
+use GuzzleHttp\Promise\PromiseInterface;
+use Illuminate\Http\Client\Response;
+use Illuminate\Support\Facades\Http;
+
 class StaffClient {
     protected static ?string $url = 'http://staff-service';
+
+    public static function sessionById(int $sessionId): PromiseInterface|Response {
+        return Http::accept('application/json')
+            ->withHeaders(['X-APP-KEY' => env('APP_KEY')])
+            ->get(self::$url . '/sessions/' . $sessionId);
+    }
 }
