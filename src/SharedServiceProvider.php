@@ -2,6 +2,7 @@
 
 namespace Phobiavr\PhoberLaravelCommon;
 
+use Illuminate\Foundation\Support\Providers\EventServiceProvider;
 use Phobiavr\PhoberLaravelCommon\Clients\ConfigClient;
 use Phobiavr\PhoberLaravelCommon\Commands\UpdateConfigsCommand;
 use Phobiavr\PhoberLaravelCommon\Commands\UpdateHostnameCommand;
@@ -66,6 +67,8 @@ class SharedServiceProvider extends ServiceProvider {
         ]);
 
         $this->app->useLangPath(__DIR__ . '/../resources/lang');
+
+        EventServiceProvider::disableEventDiscovery();
     }
 
     /**
