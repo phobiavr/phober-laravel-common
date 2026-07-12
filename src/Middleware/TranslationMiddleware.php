@@ -15,7 +15,7 @@ class TranslationMiddleware
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, \Closure $next) {
-        $locale = $request->header('Accept-Language', 'en');
+        $locale = $request->getPreferredLanguage(['en', 'ru', 'az']) ?? 'en';
 
         App::setLocale($locale);
 
