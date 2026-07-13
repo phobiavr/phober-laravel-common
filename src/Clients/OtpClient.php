@@ -3,7 +3,10 @@
 namespace Phobiavr\PhoberLaravelCommon\Clients;
 
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Http;
+use Phobiavr\PhoberLaravelCommon\Data\CheckSubmittedPayload;
+use Phobiavr\PhoberLaravelCommon\Data\GenerateOtpPayload;
+use Phobiavr\PhoberLaravelCommon\Data\ValidateOtpPayload;
+use Phobiavr\PhoberLaravelCommon\Http\Http;
 
 class OtpClient {
     protected static ?string $url = 'http://auth-server/otp';
@@ -15,11 +18,7 @@ class OtpClient {
     public static function generateOtp(): self {
         $self = new self();
 
-        $response = Http::accept('application/json')
-            ->post(self::$url . '/generate', [
-                'digits'   => $self->digits,
-                'validity' => $self->validity,
-            ]);
+        $response = Http::post(self::$url . '/generate', (new GenerateOtpPayload($self->digits, $self->validity))->toArray());
 
         if ($response->status() === Response::HTTP_OK) {
             $self->identifier = $response['identifier'];
@@ -31,16 +30,9 @@ class OtpClient {
 
     public static function validate(string $identifier, string $code = null): bool {
         if ($code) {
-            $response = Http::accept('application/json')
-                ->post(self::$url . '/validate', [
-                    'identifier' => $identifier,
-                    'code'       => $code,
-                ]);
+            $response = Http::post(self::$url . '/validate', (new ValidateOtpPayload($identifier, $code))->toArray());
         } else {
-            $response = Http::accept('application/json')
-                ->post(self::$url . '/check-submitted', [
-                    'identifier' => $identifier,
-                ]);
+            $response = Http::post(self::$url . '/check-submitted', (new CheckSubmittedPayload($identifier))->toArray());
         }
 
         return $response->status() === Response::HTTP_OK;

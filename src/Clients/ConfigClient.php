@@ -2,7 +2,7 @@
 
 namespace Phobiavr\PhoberLaravelCommon\Clients;
 
-use Illuminate\Support\Facades\Http;
+use Phobiavr\PhoberLaravelCommon\Http\Http;
 
 class ConfigClient {
     protected static ?string $url = 'http://config-server';
@@ -28,9 +28,7 @@ class ConfigClient {
      * @link https://github.com/vlucas/phpdotenv
      */
     public static function update(bool $dryRun) {
-        $response = Http::withHeaders([
-            'X-APP-KEY' => env('APP_KEY'),
-        ])->get(self::$url);
+        $response = Http::get(self::$url);
 
         if ($response->ok()) {
             self::setEnvironmentValue($response->json(), $dryRun);

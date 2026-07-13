@@ -18,6 +18,7 @@ use Phobiavr\PhoberLaravelCommon\Middleware\ForceJsonMiddleware;
 use Phobiavr\PhoberLaravelCommon\Middleware\OTPGenerateMiddleware;
 use Phobiavr\PhoberLaravelCommon\Middleware\OTPMiddleware;
 use Phobiavr\PhoberLaravelCommon\Middleware\PrivateMiddleware;
+use Phobiavr\PhoberLaravelCommon\Middleware\TraceRequestMiddleware;
 use Phobiavr\PhoberLaravelCommon\Middleware\TranslationMiddleware;
 
 class SharedServiceProvider extends ServiceProvider {
@@ -42,6 +43,7 @@ class SharedServiceProvider extends ServiceProvider {
 
         $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
 
+        $kernel->pushMiddleware(TraceRequestMiddleware::class);
         $kernel->pushMiddleware(ForceJsonMiddleware::class);
         $kernel->pushMiddleware(TranslationMiddleware::class);
         $router->aliasMiddleware('auth.server', AuthServerMiddleware::class);
