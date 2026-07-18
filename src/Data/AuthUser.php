@@ -2,33 +2,45 @@
 
 namespace Phobiavr\PhoberLaravelCommon\Data;
 
-class AuthUser {
+use Phobiavr\PhoberLaravelCommon\Contracts\AuthUserInterface;
+
+readonly class AuthUser implements AuthUserInterface {
     public function __construct(
-        public readonly int $id,
-        public readonly string $username,
-        public readonly string $firstName,
-        public readonly string $lastName,
-        public readonly string $email,
+        public int    $id,
+        public string $username,
+        public string $firstName,
+        public string $lastName,
+        public string $email,
     ) {
     }
 
     public static function fromArray(array $data): self {
         return new self(
-            (int) $data['id'],
-            $data['username'],
-            $data['first_name'],
-            $data['last_name'],
-            $data['email'],
+            (int) $data[self::FIELD_ID],
+            $data[self::FIELD_USERNAME],
+            $data[self::FIELD_FIRST_NAME],
+            $data[self::FIELD_LAST_NAME],
+            $data[self::FIELD_EMAIL],
         );
     }
 
-    public function toArray(): array {
-        return [
-            'id'         => $this->id,
-            'username'   => $this->username,
-            'first_name' => $this->firstName,
-            'last_name'  => $this->lastName,
-            'email'      => $this->email,
-        ];
+    public function getId(): int {
+        return $this->id;
+    }
+
+    public function getUsername(): string {
+        return $this->username;
+    }
+
+    public function getFirstName(): string {
+        return $this->firstName;
+    }
+
+    public function getLastName(): string {
+        return $this->lastName;
+    }
+
+    public function getEmail(): string {
+        return $this->email;
     }
 }
