@@ -2,10 +2,9 @@
 
 namespace Phobiavr\PhoberLaravelCommon;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Phobiavr\PhoberLaravelCommon\Clients\AuthClient;
 
 class Author extends Model {
     protected $connection = 'db_shared';
@@ -19,12 +18,12 @@ class Author extends Model {
         return $this->morphTo();
     }
 
-    public function createdBy(): BelongsTo {
-        return $this->belongsTo(User::class, "created_by");
+    public function getCreatedByAttribute(): ?array {
+        return AuthClient::user($this->attributes['created_by'] ?? null);
     }
 
-    public function updatedBy(): BelongsTo {
-        return $this->belongsTo(User::class, "last_updated_by");
+    public function getUpdatedByAttribute(): ?array {
+        return AuthClient::user($this->attributes['last_updated_by'] ?? null);
     }
 
     public function getAuthorableCreatedAtAttribute() {
