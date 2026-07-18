@@ -3,18 +3,19 @@
 namespace Phobiavr\PhoberLaravelCommon\Clients;
 
 use Illuminate\Http\Response;
+use Phobiavr\PhoberLaravelCommon\Data\AuthUser;
 use Phobiavr\PhoberLaravelCommon\Http\Http;
 
 class AuthClient {
     protected static ?string $url = 'http://auth-server';
 
-    public static function login() {
+    public static function login(): ?AuthUser {
         $response = Http::withToken(request()->bearerToken())->get(self::$url . '/valid');
 
-        return $response->status() === Response::HTTP_OK ? $response['user'] : null;
+        return $response->status() === Response::HTTP_OK ? AuthUser::fromArray($response['user']) : null;
     }
 
-    public static function user(?int $id): ?array {
+    public static function user(?int $id): ?AuthUser {
         if (is_null($id)) {
             return null;
         }
@@ -27,7 +28,7 @@ class AuthClient {
 
         $response = Http::get(self::$url . '/users/' . $id);
 
-        return $cache[$id] = $response->status() === Response::HTTP_OK ? $response['user'] : null;
+        return $cache[$id] = $response->status() === Response::HTTP_OK ? AuthUser::fromArray($response['user']) : null;
     }
 
     public static function linkTelegram(array $params): bool

@@ -5,6 +5,7 @@ namespace Phobiavr\PhoberLaravelCommon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Phobiavr\PhoberLaravelCommon\Clients\AuthClient;
+use Phobiavr\PhoberLaravelCommon\Data\AuthUser;
 
 class Author extends Model {
     protected $connection = 'db_shared';
@@ -18,11 +19,11 @@ class Author extends Model {
         return $this->morphTo();
     }
 
-    public function getCreatedByAttribute(): ?array {
+    public function getCreatedByAttribute(): ?AuthUser {
         return AuthClient::user($this->attributes['created_by'] ?? null);
     }
 
-    public function getUpdatedByAttribute(): ?array {
+    public function getUpdatedByAttribute(): ?AuthUser {
         return AuthClient::user($this->attributes['last_updated_by'] ?? null);
     }
 

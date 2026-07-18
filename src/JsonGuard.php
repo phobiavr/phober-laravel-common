@@ -56,8 +56,7 @@ class JsonGuard implements Guard {
      * Get the ID for the currently authenticated user.
      */
     public function id() {
-        return $this->user()['id'] ?? null;
-
+        return $this->user()?->id;
     }
 
     /**
