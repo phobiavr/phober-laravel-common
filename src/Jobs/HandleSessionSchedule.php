@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Phobiavr\PhoberLaravelCommon\Contracts\SessionScheduleHandlerInterface;
+use Phobiavr\PhoberLaravelCommon\Enums\SessionScheduleActionEnum;
 
 class HandleSessionSchedule implements ShouldQueue
 {
@@ -15,7 +16,7 @@ class HandleSessionSchedule implements ShouldQueue
 
     public function __construct(
         public readonly int $instanceId,
-        public readonly string $action,
+        public readonly SessionScheduleActionEnum $action,
         public readonly ?int $time = null,
         public readonly ?int $sessionId = null,
         public readonly ?string $startedAt = null,
