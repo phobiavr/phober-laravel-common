@@ -17,6 +17,7 @@ use Phobiavr\PhoberLaravelCommon\Middleware\AuthServerMiddleware;
 use Phobiavr\PhoberLaravelCommon\Middleware\ForceJsonMiddleware;
 use Phobiavr\PhoberLaravelCommon\Middleware\OTPGenerateMiddleware;
 use Phobiavr\PhoberLaravelCommon\Middleware\OTPMiddleware;
+use Phobiavr\PhoberLaravelCommon\Middleware\OverlaySecretMiddleware;
 use Phobiavr\PhoberLaravelCommon\Middleware\PrivateMiddleware;
 use Phobiavr\PhoberLaravelCommon\Middleware\TraceRequestMiddleware;
 use Phobiavr\PhoberLaravelCommon\Middleware\TranslationMiddleware;
@@ -51,6 +52,7 @@ class SharedServiceProvider extends ServiceProvider {
         $router->aliasMiddleware('otp', OTPMiddleware::class);
         $router->aliasMiddleware('otp.generate', OTPGenerateMiddleware::class);
         $router->aliasMiddleware('private', PrivateMiddleware::class);
+        $router->aliasMiddleware('overlay', OverlaySecretMiddleware::class);
 
         if (ConfigClient::$runEveryTime) {
             ConfigClient::update(false);
