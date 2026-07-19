@@ -16,7 +16,7 @@ class Http {
     public static function __callStatic(string $method, array $args) {
         return Facade::withMiddleware(Tracer::httpMiddleware())
             ->acceptJson()
-            ->withHeaders(['X-APP-KEY' => env('APP_KEY')])
+            ->withHeaders(['X-Service-Secret' => env('SERVICE_SECRET')])
             ->$method(...$args);
     }
 }

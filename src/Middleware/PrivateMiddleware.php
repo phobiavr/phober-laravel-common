@@ -16,7 +16,7 @@ class PrivateMiddleware {
      * @return Response|RedirectResponse|JsonResponse
      */
     public function handle(Request $request, \Closure $next) {
-        if ($request->header('X-APP-KEY') === env('APP_KEY')) {
+        if (hash_equals((string) env('SERVICE_SECRET'), (string) $request->header('X-Service-Secret'))) {
             return $next($request);
         }
 
