@@ -44,15 +44,6 @@ class JsonGuard implements Guard {
     }
 
     /**
-     * Get the JSON params from the current request
-     */
-    public function getJsonParams() {
-//    $jsondata = $this->request->query('jsondata');
-//
-//    return (!empty($jsondata) ? json_decode($jsondata, TRUE) : NULL);
-    }
-
-    /**
      * Get the ID for the currently authenticated user.
      */
     public function id() {
@@ -60,24 +51,12 @@ class JsonGuard implements Guard {
     }
 
     /**
-     * Validate a user's credentials.
+     * This guard never authenticates by local credentials — the user is always
+     * set externally via setUser() after AuthServerMiddleware validates the
+     * bearer token against auth-server. $provider is unused for that reason.
      */
-    public function validate(array $credentials = []) {
-//    if (empty($credentials['username']) || empty($credentials['password'])) {
-//      if (!$credentials = $this->getJsonParams()) {
-//        return false;
-//      }
-//    }
-//
-//    $user = $this->provider->retrieveByCredentials($credentials);
-//
-//    if (!is_null($user) && $this->provider->validateCredentials($user, $credentials)) {
-//      $this->setUser($user);
-//
-//      return true;
-//    } else {
-//      return false;
-//    }
+    public function validate(array $credentials = []): bool {
+        return false;
     }
 
     /**
@@ -92,6 +71,7 @@ class JsonGuard implements Guard {
     /**
      * Determine if the guard has a user instance.
      */
-    public function hasUser() {
+    public function hasUser(): bool {
+        return !is_null($this->user);
     }
 }
