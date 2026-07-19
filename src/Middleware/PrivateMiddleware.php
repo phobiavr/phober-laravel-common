@@ -16,7 +16,7 @@ class PrivateMiddleware {
      * @return Response|RedirectResponse|JsonResponse
      */
     public function handle(Request $request, \Closure $next) {
-        if (hash_equals((string) env('SERVICE_SECRET'), (string) $request->header('X-Service-Secret'))) {
+        if (hash_equals((string) config('service.secret'), (string) $request->header('X-Service-Secret'))) {
             return $next($request);
         }
 
