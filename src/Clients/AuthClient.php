@@ -2,15 +2,21 @@
 
 namespace Phobiavr\PhoberLaravelCommon\Clients;
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Response;
 use Phobiavr\PhoberLaravelCommon\Data\AuthUser;
+use Phobiavr\PhoberLaravelCommon\Exceptions\ServiceUnavailableException;
 use Phobiavr\PhoberLaravelCommon\Http\Http;
 
 class AuthClient {
     protected static ?string $url = 'http://auth-server';
 
     public static function login(): ?AuthUser {
-        $response = Http::withToken(request()->bearerToken())->get(self::$url . '/valid');
+        try {
+            $response = Http::withToken(request()->bearerToken())->get(self::$url . '/valid');
+        } catch (ConnectionException $e) {
+            throw new ServiceUnavailableException(parse_url(self::$url, PHP_URL_HOST) ?: 'auth-server', $e);
+        }
 
         return $response->status() === Response::HTTP_OK ? AuthUser::fromArray($response['user']) : null;
     }
