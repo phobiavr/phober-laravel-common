@@ -7,8 +7,13 @@ use Illuminate\Database\Eloquent\Builder;
 
 class PageableBuilder extends Builder {
   public function paginateFromRequest(PageableRequest $request): LengthAwarePaginator {
-    extract($request->pagination());
+    $pagination = $request->pagination();
 
-    return $this->paginate($perPage, $columns, $pageName, $page);
+    return $this->paginate(
+      $pagination['perPage'],
+      $pagination['columns'],
+      $pagination['pageName'],
+      $pagination['page'],
+    );
   }
 }
