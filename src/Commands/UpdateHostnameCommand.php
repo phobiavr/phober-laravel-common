@@ -2,10 +2,9 @@
 
 namespace Phobiavr\PhoberLaravelCommon\Commands;
 
-use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Phobiavr\PhoberLaravelCommon\Hostname;
 
 class UpdateHostnameCommand extends Command
 {
@@ -32,7 +31,6 @@ class UpdateHostnameCommand extends Command
     {
         $hostname = gethostname(); // Automatically get the hostname
         $containerName = $this->argument('container'); // Manually provided container name
-        $timestamp = Carbon::now();
         $success = false;
         $attempts = 5;
 
@@ -40,13 +38,9 @@ class UpdateHostnameCommand extends Command
             try {
                 $attempts--;
 
-                $query = DB::connection('db_shared')->table('hostnames');
-
-                $query->insert([
+                Hostname::create([
                     'hostname' => $hostname,
-                    'created_at' => $timestamp,
                     'container' => $containerName,
-                    'updated_at' => $timestamp,
                 ]);
 
                 $this->info("Hostname record for '{$hostname}' has been created.");
