@@ -3,28 +3,27 @@
 namespace Phobiavr\PhoberLaravelCommon\Middleware;
 
 use Phobiavr\PhoberLaravelCommon\Clients\OtpClient;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class OTPGenerateMiddleware {
-    private static function unathorized(): JsonResponse {
-        return response()->json(['error' => 'Unauthorized'], 401);
-    }
-
     /**
      * Handle an incoming request.
      *
      * @param Request $request
      * @param Closure(Request): (Response|RedirectResponse) $next
      * @return Response|RedirectResponse|JsonResponse
+     *
+     * @throws AuthenticationException
      */
     public function handle(Request $request, \Closure $next) {
         $otp = OtpClient::generateOtp();
 
         if (!$otp->success) {
-            return self::unathorized();
+            throw new AuthenticationException('Unauthorized');
         }
 
         $response = $next($request);
