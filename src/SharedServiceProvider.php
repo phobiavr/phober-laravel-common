@@ -16,6 +16,7 @@ use Illuminate\Support\ServiceProvider;
 use Phobiavr\PhoberLaravelCommon\Logging\TraceIdProcessor;
 use Phobiavr\PhoberLaravelCommon\Middleware\AuthServerMiddleware;
 use Phobiavr\PhoberLaravelCommon\Middleware\ForceJsonMiddleware;
+use Phobiavr\PhoberLaravelCommon\Middleware\IdempotencyMiddleware;
 use Phobiavr\PhoberLaravelCommon\Middleware\OTPGenerateMiddleware;
 use Phobiavr\PhoberLaravelCommon\Middleware\OTPMiddleware;
 use Phobiavr\PhoberLaravelCommon\Middleware\PrivateMiddleware;
@@ -54,6 +55,7 @@ class SharedServiceProvider extends ServiceProvider {
         $router->aliasMiddleware('otp', OTPMiddleware::class);
         $router->aliasMiddleware('otp.generate', OTPGenerateMiddleware::class);
         $router->aliasMiddleware('private', PrivateMiddleware::class);
+        $router->aliasMiddleware('idempotent', IdempotencyMiddleware::class);
 
         if (ConfigClient::$runEveryTime) {
             ConfigClient::update(false);
