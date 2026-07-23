@@ -10,6 +10,7 @@ trait AuthUserArrayable {
             self::FIELD_FIRST_NAME => $this->getFirstName(),
             self::FIELD_LAST_NAME  => $this->getLastName(),
             self::FIELD_EMAIL      => $this->getEmail(),
+            self::FIELD_PERMISSIONS => $this->getPermissions(),
         ];
     }
 }

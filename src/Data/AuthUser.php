@@ -11,6 +11,7 @@ readonly class AuthUser implements AuthUserInterface {
         public string $firstName,
         public string $lastName,
         public string $email,
+        public array  $permissions = [],
     ) {
     }
 
@@ -21,6 +22,7 @@ readonly class AuthUser implements AuthUserInterface {
             $data[self::FIELD_FIRST_NAME],
             $data[self::FIELD_LAST_NAME],
             $data[self::FIELD_EMAIL],
+            $data[self::FIELD_PERMISSIONS] ?? [],
         );
     }
 
@@ -42,5 +44,13 @@ readonly class AuthUser implements AuthUserInterface {
 
     public function getEmail(): string {
         return $this->email;
+    }
+
+    public function getPermissions(): array {
+        return $this->permissions;
+    }
+
+    public function hasPermission(string $permission): bool {
+        return in_array($permission, $this->permissions, true);
     }
 }
