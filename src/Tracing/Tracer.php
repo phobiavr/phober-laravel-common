@@ -4,6 +4,7 @@ namespace Phobiavr\PhoberLaravelCommon\Tracing;
 
 use OpenTelemetry\API\Globals;
 use OpenTelemetry\API\Trace\Propagation\TraceContextPropagator;
+use OpenTelemetry\API\Trace\Span;
 use OpenTelemetry\API\Trace\SpanKind;
 use OpenTelemetry\API\Trace\StatusCode;
 use OpenTelemetry\Context\Context;
@@ -41,6 +42,35 @@ class Tracer {
         static::propagator()->inject($carrier, null, Context::getCurrent());
 
         return $carrier;
+    }
+
+    /**
+     * Trace id of the currently active span, for correlating log lines
+     * across services. Null when there is no active span (SDK not loaded,
+     * or running outside any traced request/job/command context).
+     */
+    public static function currentTraceId(): ?string {
+        if (!static::enabled()) {
+            return null;
+        }
+
+        $context = Span::getCurrent()->getContext();
+
+        return $context->isValid() ? $context->getTraceId() : null;
+    }
+
+    /**
+     * Span id of the currently active span. Same null-safety as
+     * currentTraceId().
+     */
+    public static function currentSpanId(): ?string {
+        if (!static::enabled()) {
+            return null;
+        }
+
+        $context = Span::getCurrent()->getContext();
+
+        return $context->isValid() ? $context->getSpanId() : null;
     }
 
     protected static function extractContext(?array $carrier): Context {

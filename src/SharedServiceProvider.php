@@ -10,9 +10,10 @@ use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
-//use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 //use Laravel\Telescope\Telescope;
+use Phobiavr\PhoberLaravelCommon\Logging\TraceIdProcessor;
 use Phobiavr\PhoberLaravelCommon\Middleware\AuthServerMiddleware;
 use Phobiavr\PhoberLaravelCommon\Middleware\ForceJsonMiddleware;
 use Phobiavr\PhoberLaravelCommon\Middleware\OTPGenerateMiddleware;
@@ -47,6 +48,8 @@ class SharedServiceProvider extends ServiceProvider {
         $kernel->pushMiddleware(TraceRequestMiddleware::class);
         $kernel->pushMiddleware(ForceJsonMiddleware::class);
         $kernel->pushMiddleware(TranslationMiddleware::class);
+
+        Log::pushProcessor(new TraceIdProcessor());
         $router->aliasMiddleware('auth.server', AuthServerMiddleware::class);
         $router->aliasMiddleware('otp', OTPMiddleware::class);
         $router->aliasMiddleware('otp.generate', OTPGenerateMiddleware::class);
