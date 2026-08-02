@@ -3,6 +3,7 @@
 namespace Phobiavr\PhoberLaravelCommon\Traits;
 
 trait AuthUserArrayable {
+    /** @return array<string, mixed> */
     public function toAuthUserArray(): array {
         return [
             self::FIELD_ID         => $this->getId(),

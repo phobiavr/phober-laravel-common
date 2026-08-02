@@ -9,11 +9,11 @@ use Phobiavr\PhoberLaravelCommon\Exceptions\ServiceUnavailableException;
 use Phobiavr\PhoberLaravelCommon\Http\Http;
 
 class AuthClient {
-    protected static ?string $url = 'http://auth-server';
+    protected static string $url = 'http://auth-server';
 
     public static function login(): ?AuthUser {
         try {
-            $response = Http::withToken(request()->bearerToken())->get(self::$url . '/valid');
+            $response = Http::withToken(request()->bearerToken() ?? '')->get(self::$url . '/valid');
         } catch (ConnectionException $e) {
             throw new ServiceUnavailableException(parse_url(self::$url, PHP_URL_HOST) ?: 'auth-server', $e);
         }
@@ -37,6 +37,7 @@ class AuthClient {
         return $cache[$id] = $response->status() === Response::HTTP_OK ? AuthUser::fromArray($response['user']) : null;
     }
 
+    /** @param array<string, mixed> $params */
     public static function linkTelegram(array $params): bool
     {
         $response = Http::post(self::$url . '/link/telegram', $params);

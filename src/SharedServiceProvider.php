@@ -62,16 +62,22 @@ class SharedServiceProvider extends ServiceProvider {
         }
 
         Auth::extend('json', function ($app, $name, array $config) {
-            return new JsonGuard(Auth::createUserProvider($config['provider']), $app->make('request'));
+            $provider = Auth::createUserProvider($config['provider'] ?? null);
+
+            if (!$provider) {
+                throw new \InvalidArgumentException("Auth guard [{$name}] has no configured user provider.");
+            }
+
+            return new JsonGuard($provider, $app->make('request'));
         });
 
         Config::set('database.connections.db_shared', [
-            'driver'   => env('DB_SHARED_CONNECTION', 'mysql'),
-            'host'     => env('DB_SHARED_HOST', '127.0.0.1'),
-            'port'     => env('DB_SHARED_PORT', '3306'),
-            'database' => env('DB_SHARED_DATABASE', 'phober_shared'),
-            'username' => env('DB_SHARED_USERNAME', 'forge'),
-            'password' => env('DB_SHARED_PASSWORD', ''),
+            'driver'   => env('DB_SHARED_CONNECTION', 'mysql'), // @phpstan-ignore larastan.noEnvCallsOutsideOfConfig
+            'host'     => env('DB_SHARED_HOST', '127.0.0.1'), // @phpstan-ignore larastan.noEnvCallsOutsideOfConfig
+            'port'     => env('DB_SHARED_PORT', '3306'), // @phpstan-ignore larastan.noEnvCallsOutsideOfConfig
+            'database' => env('DB_SHARED_DATABASE', 'phober_shared'), // @phpstan-ignore larastan.noEnvCallsOutsideOfConfig
+            'username' => env('DB_SHARED_USERNAME', 'forge'), // @phpstan-ignore larastan.noEnvCallsOutsideOfConfig
+            'password' => env('DB_SHARED_PASSWORD', ''), // @phpstan-ignore larastan.noEnvCallsOutsideOfConfig
         ]);
 
         $this->app->useLangPath(__DIR__ . '/../resources/lang');

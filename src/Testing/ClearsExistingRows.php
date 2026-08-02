@@ -9,7 +9,7 @@ namespace Phobiavr\PhoberLaravelCommon\Testing;
  * assertions deterministic; it's safe because DatabaseTransactions rolls
  * everything back once the test ends.
  */
-trait ClearsExistingRows
+trait ClearsExistingRows // @phpstan-ignore trait.unused
 {
     protected function clearExistingRows(string ...$modelClasses): void
     {

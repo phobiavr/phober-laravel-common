@@ -8,6 +8,10 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use JsonSerializable;
 
+/**
+ * @property \Illuminate\Support\Collection<array-key, mixed> $collection
+ * @mixin LengthAwarePaginator<int, mixed>
+ */
 class PageableCollection extends ResourceCollection
 {
 
@@ -30,12 +34,10 @@ class PageableCollection extends ResourceCollection
      * Transform the resource collection into an array.
      *
      * @param Request $request
-     * @return array|Arrayable|JsonSerializable
+     * @return array<string, mixed>|Arrayable<array-key, mixed>|JsonSerializable
      */
     public function toArray($request): array|JsonSerializable|Arrayable
     {
-        /** @var PageableCollection|LengthAwarePaginator $this */
-
         return [
             'data' => $this->collection,
             'total' => $this->total(),

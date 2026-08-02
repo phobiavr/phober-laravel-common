@@ -28,6 +28,10 @@ class Http {
     private const RETRY_TIMES = 2;
     private const RETRY_BASE_DELAY_MS = 100;
 
+    /**
+     * @param array<int, mixed> $args
+     * @return mixed
+     */
     public static function __callStatic(string $method, array $args) {
         try {
             return Facade::withMiddleware(Tracer::httpMiddleware())
@@ -47,6 +51,7 @@ class Http {
         }
     }
 
+    /** @param array<int, mixed> $args */
     private static function serviceNameFromArgs(array $args): string {
         $url = is_string($args[0] ?? null) ? $args[0] : '';
 

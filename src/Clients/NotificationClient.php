@@ -15,7 +15,7 @@ class NotificationClient {
     private const TELEGRAM_BOT_NAME = 'phober_bot';
 
     public static function getUrl(): string {
-        return self::$url ?? env('NOTIFICATION_SERVER_URL', 'http://notification-server');
+        return self::$url ?? (string) config('service.notification_url', 'http://notification-server');
     }
 
     /**
@@ -29,6 +29,7 @@ class NotificationClient {
         return Http::post(self::getUrl() . '/', (new SendMessagePayload($provider, $channel, $message))->toArray());
     }
 
+    /** @param array<string, mixed> $payload */
     public static function generateShortLinkForTelegram(array $payload): string {
         $payload = http_build_query($payload);
         $encodedPayload = rtrim(strtr(base64_encode($payload), '+/', '-_'), '=');

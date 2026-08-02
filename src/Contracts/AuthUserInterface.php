@@ -20,6 +20,7 @@ interface AuthUserInterface {
 
     public function getEmail(): string;
 
+    /** @return array<int, string> */
     public function getPermissions(): array;
 
     public function hasPermission(string $permission): bool;

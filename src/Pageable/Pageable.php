@@ -5,7 +5,7 @@ namespace Phobiavr\PhoberLaravelCommon\Pageable;
 /**
  * @method static paginateFromRequest(PageableRequest $request)
  */
-trait Pageable {
+trait Pageable { // @phpstan-ignore trait.unused
   /**
    * @return PageableBuilder
    */

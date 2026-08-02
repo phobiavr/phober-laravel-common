@@ -16,6 +16,7 @@ use Throwable;
  * Opt-in: requests without the header are unaffected.
  */
 class IdempotencyMiddleware {
+    /** @return Response|RedirectResponse|JsonResponse */
     public function handle(Request $request, \Closure $next) {
         $key = $request->header('Idempotency-Key');
 
@@ -57,10 +58,7 @@ class IdempotencyMiddleware {
         return $response;
     }
 
-    /**
-     * @return Response|RedirectResponse|JsonResponse
-     */
-    private function replay(string $scope, string $key, string $requestHash) {
+    private function replay(string $scope, string $key, string $requestHash): Response {
         $existing = IdempotencyKey::query()->where('scope', $scope)->where('key', $key)->first();
 
         if (!$existing || $existing->isPending()) {
@@ -71,7 +69,7 @@ class IdempotencyMiddleware {
             throw new ConflictHttpException('This Idempotency-Key was already used with a different request payload.');
         }
 
-        return response($existing->response_body, $existing->response_status)
+        return response($existing->response_body ?? '', $existing->response_status ?? 200)
             ->header('Content-Type', $existing->response_content_type ?? 'application/json')
             ->header('Idempotency-Replayed', 'true');
     }

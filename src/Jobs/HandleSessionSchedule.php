@@ -15,6 +15,7 @@ class HandleSessionSchedule implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    /** @var array<string, string> */
     public readonly array $traceHeaders;
 
     public function __construct(

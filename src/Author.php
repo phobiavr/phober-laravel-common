@@ -15,6 +15,7 @@ class Author extends Model {
         'authorable_created_at', 'authorable_updated_at'
     ];
 
+    /** @return MorphTo<Model, $this> */
     public function authorable(): MorphTo {
         return $this->morphTo();
     }
@@ -27,11 +28,11 @@ class Author extends Model {
         return AuthClient::user($this->attributes['last_updated_by'] ?? null);
     }
 
-    public function getAuthorableCreatedAtAttribute() {
+    public function getAuthorableCreatedAtAttribute(): ?\Illuminate\Support\Carbon {
         return $this->authorable->created_at ?? null;
     }
 
-    public function getAuthorableUpdatedAtAttribute() {
+    public function getAuthorableUpdatedAtAttribute(): ?\Illuminate\Support\Carbon {
         return $this->authorable->updated_at ?? null;
     }
 }

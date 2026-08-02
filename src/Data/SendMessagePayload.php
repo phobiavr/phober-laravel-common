@@ -13,6 +13,7 @@ class SendMessagePayload {
     ) {
     }
 
+    /** @param array<string, mixed> $data */
     public static function fromArray(array $data): self {
         return new self(
             NotificationProvider::from($data['provider']),
@@ -21,6 +22,7 @@ class SendMessagePayload {
         );
     }
 
+    /** @return array<string, mixed> */
     public function toArray(): array {
         return [
             'provider' => $this->provider->value,

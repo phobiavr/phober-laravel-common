@@ -2,14 +2,15 @@
 
 namespace Phobiavr\PhoberLaravelCommon;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Http\Request;
 
 class JsonGuard implements Guard {
-    protected $request;
-    protected $provider;
-    protected $user;
+    protected Request $request;
+    protected UserProvider $provider;
+    protected ?Authenticatable $user;
 
     /**
      * Create a new authentication guard.
@@ -37,10 +38,12 @@ class JsonGuard implements Guard {
     /**
      * Get the currently authenticated user.
      */
-    public function user() {
+    public function user(): ?Authenticatable {
         if (!is_null($this->user)) {
             return $this->user;
         }
+
+        return null;
     }
 
     /**
@@ -54,6 +57,8 @@ class JsonGuard implements Guard {
      * This guard never authenticates by local credentials — the user is always
      * set externally via setUser() after AuthServerMiddleware validates the
      * bearer token against auth-server. $provider is unused for that reason.
+     *
+     * @param array<string, mixed> $credentials
      */
     public function validate(array $credentials = []): bool {
         return false;
@@ -62,7 +67,7 @@ class JsonGuard implements Guard {
     /**
      * Set the current user.
      */
-    public function setUser($user) {
+    public function setUser(Authenticatable $user): static {
         $this->user = $user;
 
         return $this;

@@ -5,7 +5,7 @@ namespace Phobiavr\PhoberLaravelCommon\Clients;
 use Phobiavr\PhoberLaravelCommon\Http\Http;
 
 class ConfigClient {
-    protected static ?string $url = 'http://config-server';
+    protected static string $url = 'http://config-server';
 
     public static bool $overwrite = false;
     public static bool $runEveryTime = false;
@@ -36,11 +36,10 @@ class ConfigClient {
     }
 
     /**
-     * @param array $values
-     * @param $dryRun
+     * @param array<string, string> $values
      * @return void
      */
-    private static function setEnvironmentValue(array $values, $dryRun): void {
+    private static function setEnvironmentValue(array $values, bool $dryRun): void {
         $envFile = ConfigClient::$customEnvFile ?? base_path('.env.shared');
         ConfigClient::$newConfigCount = 0;
         ConfigClient::$updatedConfigCount = 0;
@@ -51,7 +50,7 @@ class ConfigClient {
             file_put_contents($envFile, '');
         }
 
-        $str = file_get_contents($envFile);
+        $str = (string) file_get_contents($envFile);
 
         if (count($values) > 0) {
             foreach ($values as $envKey => $envValue) {

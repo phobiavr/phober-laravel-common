@@ -7,7 +7,9 @@ use OpenTelemetry\API\Trace\Propagation\TraceContextPropagator;
 use OpenTelemetry\API\Trace\Span;
 use OpenTelemetry\API\Trace\SpanKind;
 use OpenTelemetry\API\Trace\StatusCode;
+use OpenTelemetry\API\Trace\TracerInterface;
 use OpenTelemetry\Context\Context;
+use OpenTelemetry\Context\ContextInterface;
 use Throwable;
 
 /**
@@ -21,7 +23,7 @@ class Tracer {
         return class_exists(Globals::class);
     }
 
-    protected static function tracer() {
+    protected static function tracer(): TracerInterface {
         return Globals::tracerProvider()->getTracer('phober');
     }
 
@@ -33,6 +35,7 @@ class Tracer {
      * W3C traceparent/tracestate headers for the currently active span,
      * to be merged into an outgoing request or a job payload.
      */
+    /** @return array<string, string> */
     public static function currentTraceHeaders(): array {
         if (!static::enabled()) {
             return [];
@@ -73,7 +76,8 @@ class Tracer {
         return $context->isValid() ? $context->getSpanId() : null;
     }
 
-    protected static function extractContext(?array $carrier): Context {
+    /** @param array<string, mixed>|null $carrier */
+    protected static function extractContext(?array $carrier): ContextInterface {
         if (!$carrier) {
             return Context::getCurrent();
         }
@@ -83,6 +87,7 @@ class Tracer {
         return static::propagator()->extract($flat, null, Context::getCurrent());
     }
 
+    /** @return mixed */
     protected static function run(callable $spanBuilder, callable $callback) {
         if (!static::enabled()) {
             return $callback();
@@ -117,6 +122,11 @@ class Tracer {
     /**
      * Wrap an inbound HTTP request in a SERVER span, using trace headers
      * extracted from the caller (if any) as the parent context.
+     *
+     * @param non-empty-string $name
+     * @param array<string, mixed> $headers
+     * @param array<string, mixed> $attributes
+     * @return mixed
      */
     public static function withServerSpan(string $name, array $headers, callable $callback, array $attributes = []) {
         return static::run(
@@ -190,6 +200,11 @@ class Tracer {
      * PHP's normal request-shutdown flush between jobs, so the batch span
      * processor would otherwise sit on this span indefinitely — force an
      * export right after each job instead of waiting for one.
+     *
+     * @param non-empty-string $name
+     * @param array<string, string>|null $traceHeaders
+     * @param array<string, mixed> $attributes
+     * @return mixed
      */
     public static function withConsumerSpan(string $name, ?array $traceHeaders, callable $callback, array $attributes = []) {
         $result = static::run(
@@ -202,7 +217,10 @@ class Tracer {
         );
 
         if (static::enabled()) {
-            Globals::tracerProvider()->forceFlush();
+            $provider = Globals::tracerProvider();
+            if ($provider instanceof \OpenTelemetry\SDK\Trace\TracerProviderInterface) {
+                $provider->forceFlush();
+            }
         }
 
         return $result;

@@ -24,6 +24,7 @@ class PricePayload {
         return new self(null, $device, $tariff, $time);
     }
 
+    /** @param array<string, mixed> $data */
     public static function fromArray(array $data): self {
         $instanceId = isset($data['instance_id']) ? (int) $data['instance_id'] : null;
         $device     = isset($data['device']) ? DeviceEnum::from($data['device']) : null;
@@ -40,6 +41,7 @@ class PricePayload {
         );
     }
 
+    /** @return array<string, mixed> */
     public function toArray(): array {
         return array_filter([
             'instance_id' => $this->instanceId,

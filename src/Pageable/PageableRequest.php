@@ -17,7 +17,7 @@ class PageableRequest extends FormRequest {
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function rules(): array {
         return [
@@ -37,6 +37,7 @@ class PageableRequest extends FormRequest {
         ]);
     }
 
+    /** @return array<string, mixed> */
     public function pagination(): array {
         return $this->only(['perPage', 'columns', 'pageName', 'page']);
     }

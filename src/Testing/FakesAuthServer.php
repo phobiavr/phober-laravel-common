@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Http;
  * device-service/crm-service) compose fine on top of this, since the
  * closure returns null (falls through) for any other URL.
  */
-trait FakesAuthServer
+trait FakesAuthServer // @phpstan-ignore trait.unused
 {
     protected bool $authServerAuthorized = false;
     protected array $authServerPermissions = [];

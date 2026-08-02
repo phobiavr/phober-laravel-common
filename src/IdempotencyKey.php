@@ -4,6 +4,14 @@ namespace Phobiavr\PhoberLaravelCommon;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string $scope
+ * @property string $key
+ * @property string $request_hash
+ * @property int|null $response_status
+ * @property string|null $response_content_type
+ * @property string|null $response_body
+ */
 class IdempotencyKey extends Model {
     protected $connection = 'db_shared';
 

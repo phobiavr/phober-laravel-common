@@ -46,6 +46,7 @@ class ProblemJsonHandler {
         });
     }
 
+    /** @param array<string, mixed> $extra */
     private static function problem(Request $request, int $status, string $detail, array $extra = []): JsonResponse {
         $title = Response::$statusTexts[$status] ?? 'Error';
 
