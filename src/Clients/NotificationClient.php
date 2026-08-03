@@ -2,7 +2,6 @@
 
 namespace Phobiavr\PhoberLaravelCommon\Clients;
 
-use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Response;
 use Phobiavr\PhoberLaravelCommon\Data\SendMessagePayload;
@@ -19,13 +18,9 @@ class NotificationClient {
     }
 
     /**
-     * @param NotificationProvider $provider
-     * @param NotificationChannel $channel
-     * @param string $message
-     * @return PromiseInterface|Response
      * @throws ConnectionException
      */
-    public static function sendMessage(NotificationProvider $provider, NotificationChannel $channel, string $message): PromiseInterface|Response {
+    public static function sendMessage(NotificationProvider $provider, NotificationChannel $channel, string $message): Response {
         return Http::post(self::getUrl() . '/', (new SendMessagePayload($provider, $channel, $message))->toArray());
     }
 
