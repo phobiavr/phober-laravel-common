@@ -17,6 +17,7 @@ trait Authorable { // @phpstan-ignore trait.unused
         });
     }
 
+    /** @return MorphOne<Author, $this> */
     public function author(): MorphOne {
         return $this->morphOne(Author::class, 'authorable');
     }

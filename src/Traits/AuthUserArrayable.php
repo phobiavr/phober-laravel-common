@@ -2,7 +2,7 @@
 
 namespace Phobiavr\PhoberLaravelCommon\Traits;
 
-trait AuthUserArrayable {
+trait AuthUserArrayable { // @phpstan-ignore trait.unused
     /** @return array<string, mixed> */
     public function toAuthUserArray(): array {
         return [
