@@ -1,0 +1,8 @@
+/vendor
+/build
+.env
+.env.shared
+.env.backup
+.phpunit.result.cache
+/.idea
+/.vscode

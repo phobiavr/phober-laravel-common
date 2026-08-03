@@ -21,7 +21,11 @@ class UpdateConfigsCommand extends Command
    */
   public function handle(): void
   {
-    $customEnvFile = $this->option('custom-env-file') ?: '.env.shared';
+    $customEnvFileOption = $this->option('custom-env-file');
+    $customEnvFile = is_string($customEnvFileOption) && $customEnvFileOption !== ''
+        ? $customEnvFileOption
+        : '.env.shared';
+
     ConfigClient::$customEnvFile = base_path($customEnvFile);
 
     if ($this->option('overwrite')) {

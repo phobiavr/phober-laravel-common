@@ -1,0 +1,21 @@
+name: phober-laravel-common
+
+services:
+    app:
+        build: .
+        container_name: laravel-common-app
+        working_dir: /app
+        volumes:
+            - .:/app
+            - laravel_common_vendor:/app/vendor
+        environment:
+            APP_KEY: base64:cGhvYmVyLXRlc3QtYXBwLWtleS0zMi1ieXRlcyEhISE=
+            SERVICE_SECRET: test-service-secret
+            OVERLAY_SECRET: test-overlay-secret
+            OTEL_SDK_DISABLED: "true"
+            OTEL_PHP_AUTOLOAD_ENABLED: "false"
+        command: tail -f /dev/null
+
+volumes:
+    laravel_common_vendor:
+        name: phober_laravel_common_vendor
