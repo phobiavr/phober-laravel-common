@@ -10,6 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Phobiavr\PhoberLaravelCommon\Contracts\SessionScheduleHandlerInterface;
 use Phobiavr\PhoberLaravelCommon\Tracing\Tracer;
 use Phobiavr\PhoberLaravelCommon\Enums\SessionScheduleActionEnum;
+use Phobiavr\PhoberLaravelCommon\Exceptions\ScheduleConflictException;
 
 class HandleSessionSchedule implements ShouldQueue
 {
@@ -30,12 +31,16 @@ class HandleSessionSchedule implements ShouldQueue
 
     public function handle(SessionScheduleHandlerInterface $handler): void
     {
-        Tracer::withConsumerSpan('HandleSessionSchedule', $this->traceHeaders, function () use ($handler) {
-            $handler->handle($this->instanceId, $this->action, $this->time, $this->sessionId, $this->startedAt);
-        }, array_filter([
-            'session.instance_id' => $this->instanceId,
-            'session.action'      => $this->action->value,
-            'session.id'          => $this->sessionId,
-        ], static fn($value) => $value !== null));
+        try {
+            Tracer::withConsumerSpan('HandleSessionSchedule', $this->traceHeaders, function () use ($handler) {
+                $handler->handle($this->instanceId, $this->action, $this->time, $this->sessionId, $this->startedAt);
+            }, array_filter([
+                'session.instance_id' => $this->instanceId,
+                'session.action'      => $this->action->value,
+                'session.id'          => $this->sessionId,
+            ], static fn($value) => $value !== null));
+        } catch (ScheduleConflictException $e) {
+            $this->fail($e);
+        }
     }
 }
