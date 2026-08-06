@@ -5,6 +5,7 @@ namespace Tests\Unit\Jobs;
 use Illuminate\Contracts\Queue\Job as QueueJob;
 use Phobiavr\PhoberLaravelCommon\Contracts\SessionScheduleHandlerInterface;
 use Phobiavr\PhoberLaravelCommon\Enums\SessionScheduleActionEnum;
+use Phobiavr\PhoberLaravelCommon\Exceptions\InstanceNotFoundException;
 use Phobiavr\PhoberLaravelCommon\Exceptions\ScheduleConflictException;
 use Phobiavr\PhoberLaravelCommon\Jobs\HandleSessionSchedule;
 use RuntimeException;
@@ -37,6 +38,22 @@ class HandleSessionScheduleTest extends TestCase
         $job->job = $queueJob;
 
         // No exception should escape — it's swallowed via $this->fail(), not rethrown.
+        $job->handle($handler);
+    }
+
+    public function test_fails_the_job_without_retrying_when_the_handler_reports_a_missing_instance(): void
+    {
+        $missing = new InstanceNotFoundException('missing');
+
+        $handler = $this->createMock(SessionScheduleHandlerInterface::class);
+        $handler->method('handle')->willThrowException($missing);
+
+        $queueJob = $this->createMock(QueueJob::class);
+        $queueJob->expects($this->once())->method('fail')->with($missing);
+
+        $job = new HandleSessionSchedule(1, SessionScheduleActionEnum::QUEUE, null, null, null);
+        $job->job = $queueJob;
+
         $job->handle($handler);
     }
 

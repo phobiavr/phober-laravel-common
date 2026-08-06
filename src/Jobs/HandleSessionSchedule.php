@@ -10,6 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Phobiavr\PhoberLaravelCommon\Contracts\SessionScheduleHandlerInterface;
 use Phobiavr\PhoberLaravelCommon\Tracing\Tracer;
 use Phobiavr\PhoberLaravelCommon\Enums\SessionScheduleActionEnum;
+use Phobiavr\PhoberLaravelCommon\Exceptions\InstanceNotFoundException;
 use Phobiavr\PhoberLaravelCommon\Exceptions\ScheduleConflictException;
 
 class HandleSessionSchedule implements ShouldQueue
@@ -39,7 +40,7 @@ class HandleSessionSchedule implements ShouldQueue
                 'session.action'      => $this->action->value,
                 'session.id'          => $this->sessionId,
             ], static fn($value) => $value !== null));
-        } catch (ScheduleConflictException $e) {
+        } catch (ScheduleConflictException | InstanceNotFoundException $e) {
             $this->fail($e);
         }
     }
